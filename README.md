@@ -3,7 +3,7 @@ scratchpads for the web
 
 ## url
 
-`https://skhmt.github.io/pad/`
+[https://skhmt.github.io/pad/](https://skhmt.github.io/pad/)
 
 ## bookmarklet for markdown
 
