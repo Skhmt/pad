@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+#right {
+    text-align: right;
+    color: #2c3e50;
+    padding-top: 5px;
+    padding-right: 2px;
+}
+
+#right a {
+    color: #2c3e50;
+    margin-left: 10px;
+}
+
+#smde-container {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.control {
+    height: 30px;
+    margin-right: 5px;
+    border-radius: 3px;
+    background: white;
+}
+
+select.control {
+    border: 1px solid #bbb;
+    color: #2c3e50;
+    width: 300px;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+button.control {
+    padding: 8px 10px 15px 10px;
+    border: 1px solid rgba(0,0,0,0);
+    color: #bbb;
+}
+
+button.control:hover {
+    border: 1px solid #bbb;
+    color: #2c3e50;
+}
+
+#app {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 40px 1fr;
+}
+
+.CodeMirror {
+    height: calc(100% - 90px);
+}
