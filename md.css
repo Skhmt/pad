@@ -57,7 +57,7 @@ button.control:hover {
     width: 100%;
     overflow-y: hidden;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto;
     grid-template-rows: 40px 1fr;
 }
 
