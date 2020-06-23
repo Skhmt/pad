@@ -22,6 +22,7 @@ body {
 #smde-container {
     grid-column-start: 1;
     grid-column-end: 3;
+    font-family: "Cascadia Code", "monospace";
 }
 
 .control {
@@ -63,4 +64,9 @@ button.control:hover {
 
 .CodeMirror {
     height: calc(100% - 90px);
+}
+
+@font-face {
+    font-family: "Cascadia Code";
+    src: url("./CascadiaCode.ttf");
 }
