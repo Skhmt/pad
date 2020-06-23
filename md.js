@@ -24,6 +24,9 @@ const app = new Vue({
 
             // swap the contents of the editor
             this.mde.value(await this.getPad(newVal || ''))
+
+            // focus the text area
+            this.focusAndCursorToEnd()
         },
     },
     methods: {
@@ -48,6 +51,12 @@ const app = new Vue({
             })
             if (verbose) console.log(`Loaded pad "${padName}"`)
             return smde
+        },
+        focusAndCursorToEnd() {
+            if (verbose) console.log('Setting focus to text area and moving cursor to the end of the file')
+            const cm = this.mde.codemirror
+            cm.focus()
+            cm.setCursor(cm.lineCount(), 0)
         },
         async addPad() { // button action
             const newPad = prompt('Enter the name of a new pad')
@@ -164,7 +173,7 @@ const app = new Vue({
                 return true
             }
             return false
-        }
+        },
     },
     async mounted() {
         // set up simpleIndexedDB
@@ -176,6 +185,7 @@ const app = new Vue({
         // set up initial mde and check for the legacy/localStorage version
         if (!await this.foundLegacyStorage()) await this.loadPadList()
         this.mde = await this.newMDE(this.selected)
+        this.focusAndCursorToEnd()
 
         // save on unload
         window.onbeforeunload = () => {
