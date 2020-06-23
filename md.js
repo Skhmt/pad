@@ -52,10 +52,19 @@ const app = new Vue({
         async addPad() { // button action
             const newPad = prompt('Enter the name of a new pad')
             if (newPad) {
-                this.pads.push(newPad)
-                this.selected = newPad
-                await this.savePadList()
-                if (verbose) console.log(`Created ${newPad}`)
+                if (this.pads.includes(newPad)) {
+                    if (verbose) console.log(`Can't duplicate pad names`)
+                    alert('You cannot create a pad with the same name as an existing one')
+                }
+                else {
+                    this.pads.push(newPad)
+                    this.selected = newPad
+                    await this.savePadList()
+                    if (verbose) console.log(`Created ${newPad}`)
+                }
+            }
+            else {
+                if (verbose) console.log(`User cancelled creation of new pad`)
             }
         },
         async removePad() { // button action
@@ -67,8 +76,30 @@ const app = new Vue({
                 await this.sidb.delete(this.padPrefix+old)
                 this.selected = 'home'
             }
+            else {
+                if (verbose) console.log(`User cancelled deletion of this pad`)
+            }
         },
-        async savePad(location) {
+        async renamePad() { // button action
+            const newName = prompt('Enter the new name for this pad')
+            if (newName) {
+                if (this.pads.includes(newName)) {
+                    if (verbose) console.log(`Can't duplicate pad names`)
+                    alert('You cannot rename a pad to the same name as an existing one')
+                }
+                else {
+                    const oldName = this.selected
+                    const index = this.pads.indexOf(oldName)
+                    this.pads[index] = newName
+                    this.selected = newName
+                    if (verbose) console.log(`Renamed "${oldName}" to "${newName}"`)
+                }
+            }
+            else {
+                if (verbose) console.log(`User cancelled renaming`)
+            }
+        },
+        async savePad(location) { // button action
             if (verbose) console.log(`Saving "${location}"`)
             await this.sidb.set(this.padPrefix+location, this.mde.value())
         },

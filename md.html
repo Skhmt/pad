@@ -39,6 +39,7 @@
             integrity="sha384-3zW4Ss6nBzDaj/vvjP2Qwu5xaWAzOgTSccYj0DfBO/5tDzQksJa+tWrYMlYPM00u"
             crossorigin="anonymous"></script>
          -->
+
         <!-- proprietary includes -->
         <link rel="stylesheet" href="md.css">
         <script src="sidb.js"></script>
@@ -51,14 +52,14 @@
                 </select>
                 
                 <button 
-                    title="Add new pad"
+                    title="New"
                     class="control" 
                     @click="addPad"
                 >
                     <i class="fa fa-plus"></i>
                 </button>
                 <button 
-                    title="Delete this pad"
+                    title="Delete"
                     class="control" 
                     @click="removePad" 
                     :disabled="selected=='home'"
@@ -66,7 +67,15 @@
                     <i class="fa fa-minus"></i>
                 </button>
                 <button 
-                    title="Download this pad"
+                    title="Rename"
+                    class="control" 
+                    @click="renamePad"
+                    :disabled="selected=='home'"
+                >
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button 
+                    title="Download"
                     class="control" 
                     @click="downloadPad" 
                 >
@@ -74,7 +83,7 @@
                 </button>
             </div>
             <div id="right">
-                <a>
+                <a href="https://github.com/Skhmt/pad">
                     <i class="fa fa-github"></i>
                 </a>
                 <a 

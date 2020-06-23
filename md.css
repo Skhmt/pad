@@ -67,6 +67,7 @@ button.control:disabled {
 
 .CodeMirror {
     height: calc(100vh - 130px);
+    min-height: calc(100vh - 130px);
 }
 
 @font-face {
