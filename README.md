@@ -7,4 +7,4 @@
 ## bookmarklet
 
 Drag this to your bookmarks bar
-[MDP](javascript: (function(){ window.open('https://skhmt.github.io/pad/', 'window', 'width=600,height=600'); })())
+<a href="javascript: (function(){ window.open('https://skhmt.github.io/pad/', 'window', 'width=600,height=600'); })()">MDP</a>
