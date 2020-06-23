@@ -20,16 +20,10 @@ const app = new Vue({
             if (this.pads.includes(oldVal)) {
                 if (verbose) console.log(`Found "${oldVal}"`)
                 await this.savePad(oldVal)
-            }   
+            }
 
-            // reset to a text area
-            this.mde.toTextArea()
-
-            // clear the text area
-            document.getElementById(this.smdeElementName).value = ''
-
-            // make new MDE
-            this.mde = await this.newMDE(newVal)
+            // swap the contents of the editor
+            this.mde.value(await this.getPad(newVal))
         },
     },
     methods: {
@@ -49,11 +43,6 @@ const app = new Vue({
                 renderingConfig: {
                     codeSyntaxHighlighting: true,
                 },
-                // autosave: {
-                //     enabled: true,
-                //     uniqueID: 'nopopup',
-                //     delay: 1000,
-                // },
                 initialValue: padValue,
                 status: ['lines', 'words'] // autosave, lines, words, cursor
             })
@@ -73,29 +62,24 @@ const app = new Vue({
                 this.pads = this.pads.filter(el => el != old)
                 await this.savePadList()
                 if (verbose) console.log(`Removing "${old}"`)
-                // localStorage.removeItem(this.padPrefix+old)
                 await this.sidb.delete(this.padPrefix+old)
                 this.selected = 'home'
             }
         },
         async savePad(location) {
             if (verbose) console.log(`Saving "${location}"`)
-            // localStorage.setItem(this.padPrefix+location, this.mde.value())
             await this.sidb.set(this.padPrefix+location, this.mde.value())
         },
         async getPad(location) {
             if (verbose) console.log(`Getting "${location}"`)
-            // return localStorage.getItem(this.padPrefix+location)
             return await this.sidb.get(this.padPrefix+location)
         },
         async savePadList() {
             if (verbose) console.log(`Saving list`)
-            // localStorage.setItem(this.listName, JSON.stringify(this.pads))
             await this.sidb.set(this.listName, JSON.stringify(this.pads))
         },
         async loadPadList() {
             if (verbose) console.log(`Loading list`)
-            // const storedPads = localStorage.getItem(this.listName)
             const storedPads = await this.sidb.get(this.listName)
             if (storedPads) this.pads = JSON.parse(storedPads)
             else this.pads = ['home']
