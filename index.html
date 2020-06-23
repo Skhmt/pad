@@ -1,36 +1,102 @@
-<html style="overflow-x: hidden">
+<!--
+    MarkDownPad
+
+    @verson 2.5.0
+-->
+<html>
     <head>
-        <title>LocalStorage Pads</title>
+        <title>MarkDownPad</title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- highlight.js -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"
+            integrity="sha384-0aiASjhj77b5St45szzu0sXr0UP7bgrzRzbOCHNPa3p2GOqcS/4juAoCejY0j1nk"
+            crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"
+            integrity="sha384-ZeLYJ2PNSQjvogWP559CDAf02Qb8FE5OyQicqtz/+UhZutbrwyr87Be7NPH/RgyC"
+            crossorigin="anonymous"></script>
+
+        <!-- SimpleMDE -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.css"
+            integrity="sha384-rQdIropf4eQBEB9SkNB4xxukYHlkyXJfKYkpVNUQOLizz+d2q0wo7zjVA2XcYSij" 
+            crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.js"
+            integrity="sha384-83rBTICYr+FwAC+A5t0ZYsWjTcPXibCe/NBSFLAgMPkwHBvIi02EcE9OShMsGCi3" 
+            crossorigin="anonymous"></script>
+
+        <!-- Vue -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11" 
+            integrity="sha384-OZmxTjkv7EQo5XDMPAmIkkvywVeXw59YyYh6zq8UKfkbor13jS+5p8qMTBSA1q+F" 
+            crossorigin="anonymous"></script>
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+            crossorigin="anonymous">
+
+        <!-- axios-->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js"
+            integrity="sha384-3zW4Ss6nBzDaj/vvjP2Qwu5xaWAzOgTSccYj0DfBO/5tDzQksJa+tWrYMlYPM00u"
+            crossorigin="anonymous"></script>
+         -->
+
+        <!-- proprietary includes -->
+        <link rel="stylesheet" href="md.css">
+        <script src="sidb.js"></script>
     </head>
     <body>
-        <div class="row">
-            <div class="col-xs-3"></div>
-            <div class="col-xs-6">
-                <h1>LocalStorage Pads</h1>
-                <p>These notepads will automatically save your notes in your browser's storage, persisting them through closing and restarts. Clearing your browser cache is not advised.</p>
-                <p>The different pads below do not share information storage - what you write in one won't effect the other.</p>
-                <p>Rich text is like Microsoft Word or other text editors, while Markdown is a syntax popularized by places like Github, Reddit, and Stackexchange.</p>
-                <p>To use, drag the bookmarklet links below onto your bookmarks bar. You can rename it.</p>
+        <div id="app">
+            <div>
+                <select class="control" v-model="selected">
+                    <option v-for="pad in pads" :value="pad">{{pad}}</option>
+                </select>
                 
-                <h3>Bookmarklets</h3>
-                <p>
-                    <a href="javascript: (function(){window.open('https://skhmt.github.io/pad/rt.html', 'window', 'width=750,height=750');})()"
-                        class="btn btn-default">Rich Text Pad</a>
-                    <a href="javascript: (function(){window.open('https://skhmt.github.io/pad/md.html', 'window', 'width=600,height=600');})()"
-                        class="btn btn-default">Markdown Pad</a>
-                </p>
-
-                <h3>Created with</h3>
-                <p>
-                    <a href="https://simplemde.com/">SimpleMDE</a>
-                    | <a href="https://quilljs.com/">Quill</a>
-                    | <a href="https://highlightjs.org/">highlight.js</a>
-                </p>
+                <button 
+                    title="New"
+                    class="control" 
+                    @click="addPad"
+                >
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button 
+                    title="Delete"
+                    class="control" 
+                    @click="removePad" 
+                    :disabled="selected=='home'"
+                >
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button 
+                    title="Rename"
+                    class="control" 
+                    @click="renamePad"
+                    :disabled="selected=='home'"
+                >
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button 
+                    title="Download"
+                    class="control" 
+                    @click="downloadPad" 
+                >
+                    <i class="fa fa-download"></i>
+                </button>
             </div>
-            <div class="col-xs-3"></div>
+            <div id="right">
+                <a href="https://github.com/Skhmt/pad" target="_blank">
+                    <i class="fa fa-github"></i>
+                </a>
+                <a 
+                    href="javascript: (function(){ window.open('https://skhmt.github.io/pad/', 'window', 'width=600,height=600'); })()"
+                    title="Drag this to your bookmarks bar to create a bookmarklet."
+                >
+                    <i class="fa fa-bookmark"></i>
+                </a>
+            </div>
+            <div id="smde-container">
+                <textarea id="smde-placeholder"></textarea>
+            </div>
         </div>
+        <script src="md.js"></script>
     </body>
 </html>
