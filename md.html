@@ -61,7 +61,7 @@
                     title="Delete this pad"
                     class="control" 
                     @click="removePad" 
-                    v-if="selected!='home'"
+                    :disabled="selected=='home'"
                 >
                     <i class="fa fa-minus"></i>
                 </button>

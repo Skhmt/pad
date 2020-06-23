@@ -43,12 +43,16 @@ select.control {
 button.control {
     padding: 8px 10px 15px 10px;
     border: 1px solid rgba(0,0,0,0);
-    color: #bbb;
+    color: #2c3e50;
 }
 
 button.control:hover {
     border: 1px solid #bbb;
-    color: #2c3e50;
+}
+
+button.control:disabled {
+    color: #bbb;
+    border: 1px solid rgba(0,0,0,0);
 }
 
 #app {

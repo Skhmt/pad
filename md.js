@@ -51,10 +51,12 @@ const app = new Vue({
         },
         async addPad() { // button action
             const newPad = prompt('Enter the name of a new pad')
-            this.pads.push(newPad)
-            this.selected = newPad
-            await this.savePadList()
-            if (verbose) console.log(`Created ${newPad}`)
+            if (newPad) {
+                this.pads.push(newPad)
+                this.selected = newPad
+                await this.savePadList()
+                if (verbose) console.log(`Created ${newPad}`)
+            }
         },
         async removePad() { // button action
             const old = this.selected
