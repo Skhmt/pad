@@ -8,7 +8,7 @@ const app = new Vue({
         mde: {},
         smdeElementName: 'smde-placeholder',
         updateRate: 10*1000, // in milliseconds
-        padPrefix: 'mdp_pad_', // mdp_pad_
+        padPrefix: 'mdp_pad_',
         listName: 'mdp_list',
         sidb: {},
     },
@@ -47,7 +47,7 @@ const app = new Vue({
                     codeSyntaxHighlighting: true,
                 },
                 initialValue: padValue,
-                status: ['lines', 'words'] // autosave, lines, words, cursor
+                status: ['lines', 'words'] // can be any of: autosave, lines, words, cursor
             })
             if (verbose) console.log(`Loaded pad "${padName}"`)
             return smde
@@ -205,7 +205,5 @@ const app = new Vue({
             }, this.updateRate)
         }
         periodicSave()
-
-        // adapter to save new things
     },
 })
