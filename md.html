@@ -1,7 +1,7 @@
 <!--
     MarkDownPad
 
-    @verson 2.2.1
+    @verson 2.3.0
 -->
 <html>
     <head>
@@ -33,7 +33,12 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous">
-        
+
+        <!-- axios-->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js"
+            integrity="sha384-3zW4Ss6nBzDaj/vvjP2Qwu5xaWAzOgTSccYj0DfBO/5tDzQksJa+tWrYMlYPM00u"
+            crossorigin="anonymous"></script>
+         -->
         <!-- proprietary includes -->
         <link rel="stylesheet" href="md.css">
         <script src="sidb.js"></script>
@@ -59,6 +64,13 @@
                     v-if="selected!='home'"
                 >
                     <i class="fa fa-minus"></i>
+                </button>
+                <button 
+                    title="Download this pad"
+                    class="control" 
+                    @click="downloadPad" 
+                >
+                    <i class="fa fa-download"></i>
                 </button>
             </div>
             <div id="right">

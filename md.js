@@ -74,6 +74,21 @@ const app = new Vue({
             if (verbose) console.log(`Getting "${location}"`)
             return await this.sidb.get(this.padPrefix+location)
         },
+        async downloadPad() {
+            const filename = this.selected + '.md'
+            const data = this.mde.value()
+            const file = new Blob([data], {type: 'text/markdown'})
+            const a = document.createElement('a')
+            const url = URL.createObjectURL(file)
+            a.href = url
+            a.download = filename
+            document.body.appendChild(a)
+            a.click()
+            setTimeout(()=>{
+                document.body.removeChild(a)
+                window.URL.revokeObjectURL(url)
+            }, 0)
+        },
         async savePadList() {
             if (verbose) console.log(`Saving list`)
             await this.sidb.set(this.listName, JSON.stringify(this.pads))

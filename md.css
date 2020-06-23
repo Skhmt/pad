@@ -56,14 +56,13 @@ button.control:hover {
     margin: 0;
     height: 100%;
     width: 100%;
-    overflow-y: hidden;
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: 40px 1fr;
 }
 
 .CodeMirror {
-    height: calc(100% - 90px);
+    height: calc(100vh - 130px);
 }
 
 @font-face {
