@@ -6,4 +6,5 @@
 
 ## bookmarklet
 
-`javascript: (function(){ window.open('https://skhmt.github.io/pad/', 'window', 'width=600,height=600'); })()`
+Drag this to your bookmarks bar
+[MDP](javascript: (function(){ window.open('https://skhmt.github.io/pad/', 'window', 'width=600,height=600'); })())
