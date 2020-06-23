@@ -1,14 +1,9 @@
-# scratchpad
-scratchpads for the web
+# markdown scratch pad
 
 ## url
 
 [https://skhmt.github.io/pad/](https://skhmt.github.io/pad/)
 
-## bookmarklet for markdown
+## bookmarklet
 
-`javascript: (function(){ window.open('https://skhmt.github.io/pad/md.html', 'window', 'width=600,height=600'); })()`
-
-## bookmarklet for richtext
-
-`javascript: (function(){ window.open('https://skhmt.github.io/pad/rt.html', 'window', 'width=600,height=600'); })()`
+`javascript: (function(){ window.open('https://skhmt.github.io/pad/', 'window', 'width=600,height=600'); })()`
