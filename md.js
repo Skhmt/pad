@@ -23,7 +23,7 @@ const app = new Vue({
             }
 
             // swap the contents of the editor
-            this.mde.value(await this.getPad(newVal))
+            this.mde.value(await this.getPad(newVal || ''))
         },
     },
     methods: {
@@ -58,9 +58,10 @@ const app = new Vue({
                 }
                 else {
                     this.pads.push(newPad)
+                    await this.sidb.set(this.padPrefix+newPad, '')
                     this.selected = newPad
                     await this.savePadList()
-                    if (verbose) console.log(`Created ${newPad}`)
+                    if (verbose) console.log(`Created "${newPad}"`)
                 }
             }
             else {
