@@ -3,7 +3,7 @@
     "short_name": "mdp",
     "description": "Progressive Web App that lets you write notes in markdown.",
     "icons": [
-      { 
+      {
         "src": "icon/mdp-512.png",
         "sizes": "512x512",
         "type": "image/png"
