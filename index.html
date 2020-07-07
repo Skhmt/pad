@@ -7,8 +7,8 @@
     <head>
         <title>MarkDownPad</title>
         <meta charset="UTF-8">
-        <link rel="icon" href="/pad/icon/mdp-512.png">
 
+        <link rel="manifest" href="mdp.webmanifest">
         <script>
             if ('serviceWorker' in navigator) {
                 console.log('CLIENT: service worker registration in progress.')
@@ -24,7 +24,8 @@
                 console.warn('CLIENT: service worker not supported.')
             }
         </script>
-        <link rel="manifest" href="mdp.webmanifest">
+        
+        <link rel="icon" href="/pad/icon/mdp-512.png">
 
         <!-- highlight.js -->
         <link rel="stylesheet" href="/pad/lib/atom-one-light.css">
