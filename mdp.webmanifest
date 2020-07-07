@@ -10,7 +10,7 @@
       }
     ],
     "start_url": "/pad/index.html",
-    "display": "minimal-ui",
+    "display": "standalone",
     "theme_color": "#2c3e50",
     "background_color": "#FFFFFF"
   }
