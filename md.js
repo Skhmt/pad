@@ -87,7 +87,7 @@ const app = new Vue({
                 this.selected = 'home'
             }
             else {
-                if (verbose) console.log(`User cancelled deletion of this pad`)
+                if (verbose) console.log('User cancelled deletion of this pad')
             }
         },
         async renamePad() { // button action
