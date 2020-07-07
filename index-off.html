@@ -8,6 +8,22 @@
         <title>MarkDownPad</title>
         <meta charset="UTF-8">
 
+        <script>
+            if ('serviceWorker' in navigator) {
+                console.log('CLIENT: service worker registration in progress.')
+                navigator.serviceWorker.register('/service-worker.js')
+                .then(() => {
+                    console.log('CLIENT: service worker registration complete.')
+                },
+                () => {
+                    console.error('CLIENT: service worker registration failed.')
+                })
+            }
+            else {
+                console.warn('CLIENT: service worker not supported.')
+            }
+        </script>
+
         <!-- highlight.js -->
         <link rel="stylesheet" href="/lib/atom-one-light.css">
         <script src="/lib/highlight.min.js"></script>
@@ -103,21 +119,6 @@
                 <textarea id="smde-placeholder"></textarea>
             </div>
         </div>
-        <script>
-            if ('serviceWorker' in navigator) {
-                console.log('CLIENT: service worker registration in progress.')
-                navigator.serviceWorker.register('/service-worker.js')
-                .then(() => {
-                    console.log('CLIENT: service worker registration complete.')
-                },
-                () => {
-                    console.error('CLIENT: service worker registration failed.')
-                })
-            }
-            else {
-                console.warn('CLIENT: service worker not supported.')
-            }
-        </script>
         <script src="md.js"></script>
     </body>
 </html>
