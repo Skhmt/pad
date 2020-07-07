@@ -4,7 +4,7 @@
  * reading: https://css-tricks.com/serviceworker-for-offline/
  */
 
-const version = 'md-0.0.1'
+const version = 'md-0.0.2'
 const cacheURLs = [
     // don't need index.html or service-worker.js ?
     '/pad',
