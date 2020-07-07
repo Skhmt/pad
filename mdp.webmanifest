@@ -1,6 +1,6 @@
 {
-    "name": "Markdownpad PWA",
-    "short_name": "mdpPWA",
+    "name": "Markdownpad",
+    "short_name": "mdp",
     "description": "Progressive Web App that lets you write notes in markdown.",
     "icons": [
       {
