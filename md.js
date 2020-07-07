@@ -1,5 +1,5 @@
 const verbose = true
-
+ 
 const app = new Vue({
     el: '#app',
     data: {

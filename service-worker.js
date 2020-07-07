@@ -1,6 +1,6 @@
 /**
  * This is a service worker
- * 
+ *  
  * reading: https://css-tricks.com/serviceworker-for-offline/
  */
 
