@@ -11,7 +11,7 @@
         <script>
             if ('serviceWorker' in navigator) {
                 console.log('CLIENT: service worker registration in progress.')
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('/pad/service-worker.js')
                 .then(() => {
                     console.log('CLIENT: service worker registration complete.')
                 },
