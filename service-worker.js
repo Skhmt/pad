@@ -4,7 +4,7 @@
  * reading: https://css-tricks.com/serviceworker-for-offline/
  */
 
-const version = 'md-0.0.2'
+const version = 'md-0.0.3'
 const cacheURLs = [
     // don't need index.html or service-worker.js ?
     '/pad',
@@ -19,6 +19,7 @@ const cacheURLs = [
     '/pad/lib/atom-one-light.css',
     '/pad/lib/fa/css/font-awesome.min.css',
     '/pad/lib/fa/fonts/fontawesome-webfont.woff2',
+    '/pad/icon/mdp-512.png',
     // '/lib/fa/',
     // '/lib/',
 ]
