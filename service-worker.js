@@ -4,24 +4,21 @@
  * reading: https://css-tricks.com/serviceworker-for-offline/
  */
 
-const version = 'md-0.0.3'
+const version = 'md-1.0.0-emde'
 const cacheURLs = [
-    // don't need index.html or service-worker.js ?
     '/pad',
     '/pad/md.js',
     '/pad/md.css',
     '/pad/sidb.js',
     '/pad/lib/CascadiaCode.ttf',
-    '/pad/lib/simplemde.min.js',
-    '/pad/lib/simplemde.min.css',
+    '/pad/lib/easymde.min.js',
+    '/pad/lib/easymde.min.css',
     '/pad/lib/vue-2.6.11.js',
     '/pad/lib/highlight.min.js',
     '/pad/lib/atom-one-light.css',
     '/pad/lib/fa/css/font-awesome.min.css',
     '/pad/lib/fa/fonts/fontawesome-webfont.woff2',
     '/pad/icon/mdp-512.png',
-    // '/lib/fa/',
-    // '/lib/',
 ]
 
 self.addEventListener('install', event => {

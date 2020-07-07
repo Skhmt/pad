@@ -6,7 +6,7 @@ const app = new Vue({
         pads: [],
         selected: 'home',
         mde: {},
-        smdeElementName: 'smde-placeholder',
+        mdeElementName: 'mde-placeholder',
         updateRate: 10*1000, // in milliseconds
         padPrefix: 'mdp_pad_',
         listName: 'mdp_list',
@@ -32,8 +32,8 @@ const app = new Vue({
     methods: {
         async newMDE(padName) {
             const padValue = await this.getPad(padName)
-            const smde =  new SimpleMDE({
-                element: document.getElementById(this.smdeElementName),
+            const newmde =  new EasyMDE({
+                element: document.getElementById(this.mdeElementName),
                 toolbar: ['heading-1', 'heading-2', 'heading-3', '|',
                     'bold', 'italic', 'strikethrough', '|',
                     'quote', 'code', '|',
@@ -50,7 +50,7 @@ const app = new Vue({
                 status: ['lines', 'words'] // can be any of: autosave, lines, words, cursor
             })
             if (verbose) console.log(`Loaded pad "${padName}"`)
-            return smde
+            return newmde
         },
         focusAndCursorToEnd() {
             if (verbose) console.log('Setting focus to text area and moving cursor to the end of the file')

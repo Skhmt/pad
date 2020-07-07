@@ -23,7 +23,7 @@ body {
     margin-left: 10px;
 }
 
-#smde-container {
+#mde-container {
     grid-column-start: 1;
     grid-column-end: 3;
     font-family: "Cascadia Code", "monospace";
@@ -76,5 +76,5 @@ button.control:disabled {
 
 @font-face {
     font-family: "Cascadia Code";
-    src: url("/pad/lib/CascadiaCode.ttf");
+    src: url("./lib/CascadiaCode.ttf");
 }
