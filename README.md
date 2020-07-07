@@ -7,3 +7,5 @@
 ## bookmarklet
 
 `javascript: (function(){ window.open('https://skhmt.github.io/pad/', 'window', 'width=600,height=600'); })()`
+
+## install as a PWA with chrome
