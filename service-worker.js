@@ -4,7 +4,7 @@
  * reading: https://css-tricks.com/serviceworker-for-offline/
  */
 
-const version = 'md-1.0.0-emde'
+const version = 'md-1.0.0'
 const cacheURLs = [
     '/pad',
     '/pad/md.js',
