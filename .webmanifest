@@ -1,0 +1,16 @@
+{
+    "name": "Markdownpad PWA",
+    "short_name": "mdpPWA",
+    "description": "Progressive Web App that lets you write notes in markdown.",
+    "icons": [
+      {
+        "src": "icon/mdp-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/pad/index.html",
+    "display": "minimal-ui",
+    "theme_color": "#2c3e50",
+    "background_color": "#FFFFFF"
+  }
