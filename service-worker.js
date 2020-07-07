@@ -6,6 +6,7 @@
 
 const version = 'md-1.0.0'
 const cacheURLs = [
+    './',
     '/pad',
     '/pad/md.js',
     '/pad/md.css',
