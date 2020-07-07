@@ -76,5 +76,5 @@ button.control:disabled {
 
 @font-face {
     font-family: "Cascadia Code";
-    src: url("./lib/CascadiaCode.ttf");
+    src: url("/pad/lib/CascadiaCode.ttf");
 }
