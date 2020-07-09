@@ -1,7 +1,7 @@
 <!--
     MarkDownPad
 
-    @verson 4.1.0
+    @verson 4.2.0
 -->
 <html>
     <head>
@@ -10,19 +10,19 @@
 
         <link rel="manifest" href="mdp.webmanifest">
         <script>
-            // if ('serviceWorker' in navigator) {
-            //     console.log('CLIENT: service worker registration in progress.')
-            //     navigator.serviceWorker.register('./service-worker.js')
-            //     .then(() => {
-            //         console.log('CLIENT: service worker registration complete.')
-            //     },
-            //     () => {
-            //         console.error('CLIENT: service worker registration failed.')
-            //     })
-            // }
-            // else {
-            //     console.warn('CLIENT: service worker not supported.')
-            // }
+            if ('serviceWorker' in navigator) {
+                console.log('CLIENT: service worker registration in progress.')
+                navigator.serviceWorker.register('./service-worker.js')
+                .then(() => {
+                    console.log('CLIENT: service worker registration complete.')
+                },
+                () => {
+                    console.error('CLIENT: service worker registration failed.')
+                })
+            }
+            else {
+                console.warn('CLIENT: service worker not supported.')
+            }
         </script>
         
         <link rel="icon" href="./icon/mdp-512.png">
@@ -104,7 +104,7 @@
                         New pad
                     </div>
                     <div class="modal-content">
-                        <input id="addModalInput" v-model="newModal" type="text" @keyup.enter="addPad">
+                        <input id="addModalInput" v-model="newModal" type="text" @keyup.enter="addPad" @keyup.esc="toggleModal('addmodal')">
                     </div>
                     <div class="modal-action">
                         <button @click="addPad" class="modal-confirm modal-blue">Confirm</button>
@@ -135,7 +135,7 @@
                         Rename pad
                     </div>
                     <div class="modal-content">
-                        <input id="renameModalInput" v-model="renameModal" type="text" @keyup.enter="renamePad">
+                        <input id="renameModalInput" v-model="renameModal" type="text" @keyup.enter="renamePad" @keyup.esc="toggleModal('renamemodal')">
                     </div>
                     <div class="modal-action">
                         <button @click="renamePad" class="modal-confirm modal-blue">Confirm</button>

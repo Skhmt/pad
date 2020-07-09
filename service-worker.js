@@ -4,7 +4,7 @@
  * reading: https://css-tricks.com/serviceworker-for-offline/
  */
 
-const version = 'md-1.1.0'
+const version = 'md-1.2.0'
 const cacheURLs = [
     './',
     '/pad',
