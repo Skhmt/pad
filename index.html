@@ -1,7 +1,7 @@
 <!--
     MarkDownPad
 
-    @verson 4.0.0
+    @verson 4.1.0
 -->
 <html>
     <head>
@@ -10,19 +10,19 @@
 
         <link rel="manifest" href="mdp.webmanifest">
         <script>
-            if ('serviceWorker' in navigator) {
-                console.log('CLIENT: service worker registration in progress.')
-                navigator.serviceWorker.register('./service-worker.js')
-                .then(() => {
-                    console.log('CLIENT: service worker registration complete.')
-                },
-                () => {
-                    console.error('CLIENT: service worker registration failed.')
-                })
-            }
-            else {
-                console.warn('CLIENT: service worker not supported.')
-            }
+            // if ('serviceWorker' in navigator) {
+            //     console.log('CLIENT: service worker registration in progress.')
+            //     navigator.serviceWorker.register('./service-worker.js')
+            //     .then(() => {
+            //         console.log('CLIENT: service worker registration complete.')
+            //     },
+            //     () => {
+            //         console.error('CLIENT: service worker registration failed.')
+            //     })
+            // }
+            // else {
+            //     console.warn('CLIENT: service worker not supported.')
+            // }
         </script>
         
         <link rel="icon" href="./icon/mdp-512.png">
@@ -55,14 +55,14 @@
                 <button 
                     title="New"
                     class="control" 
-                    @click="addPad"
+                    @click="addOpenModal"
                 >
                     <i class="fa fa-plus"></i>
                 </button>
                 <button 
                     title="Delete"
                     class="control" 
-                    @click="removePad" 
+                    @click="toggleModal('deletemodal')" 
                     :disabled="selected=='home'"
                 >
                     <i class="fa fa-minus"></i>
@@ -70,7 +70,7 @@
                 <button 
                     title="Rename"
                     class="control" 
-                    @click="renamePad"
+                    @click="renameOpenModal"
                     :disabled="selected=='home'"
                 >
                     <i class="fa fa-pencil"></i>
@@ -97,6 +97,67 @@
             <div id="mde-container">
                 <textarea id="mde-placeholder"></textarea>
             </div>
+
+            <div id="addmodal" class="modal">
+                <div class="modal-popup">
+                    <div class="modal-title modal-blue">
+                        New pad
+                    </div>
+                    <div class="modal-content">
+                        <input id="addModalInput" v-model="newModal" type="text" @keyup.enter="addPad">
+                    </div>
+                    <div class="modal-action">
+                        <button @click="addPad" class="modal-confirm modal-blue">Confirm</button>
+                        <button @click="toggleModal('addmodal')"  class="modal-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="deletemodal" class="modal">
+                <div class="modal-popup">
+                    <div class="modal-title modal-red">
+                        Delete pad
+                    </div>
+                    <div class="modal-content">
+                        Are you sure you want to DELETE this pad?<br>
+                        This is permanent and cannot be undone!<br>
+                    </div>
+                    <div class="modal-action">
+                        <button @click="removePad" id="dothething" class="modal-confirm modal-red">Confirm</button>
+                        <button @click="toggleModal('deletemodal')" class="modal-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="renamemodal" class="modal">
+                <div class="modal-popup">
+                    <div class="modal-title modal-blue">
+                        Rename pad
+                    </div>
+                    <div class="modal-content">
+                        <input id="renameModalInput" v-model="renameModal" type="text" @keyup.enter="renamePad">
+                    </div>
+                    <div class="modal-action">
+                        <button @click="renamePad" class="modal-confirm modal-blue">Confirm</button>
+                        <button @click="toggleModal('renamemodal')" class="modal-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="alertmodal" class="modal">
+                <div class="modal-popup">
+                    <div class="modal-title modal-orange">
+                        Warning
+                    </div>
+                    <div class="modal-content">
+                        {{ alertText }}
+                    </div>
+                    <div class="modal-action">
+                        <button @click="toggleModal('alertmodal')" class="modal-confirm modal-orange">OK</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <script src="md.js"></script>
     </body>

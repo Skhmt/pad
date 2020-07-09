@@ -11,6 +11,9 @@ const app = new Vue({
         padPrefix: 'mdp_pad_',
         listName: 'mdp_list',
         sidb: {},
+        newModal: '',
+        renameModal: '',
+        alertText: '',
     },
     watch: {
         async selected(newVal, oldVal) {
@@ -52,66 +55,86 @@ const app = new Vue({
             if (verbose) console.log(`Loaded pad "${padName}"`)
             return newmde
         },
+        alert(text) {
+            this.toggleModal('alertmodal')
+            this.alertText = text
+        },
         focusAndCursorToEnd() {
             if (verbose) console.log('Setting focus to text area and moving cursor to the end of the file')
             const cm = this.mde.codemirror
             cm.focus()
             cm.setCursor(cm.lineCount(), 0)
         },
-        async addPad() { // button action
-            const newPad = prompt('Enter the name of a new pad')
-            if (newPad) {
-                if (this.pads.includes(newPad)) {
-                    if (verbose) console.log(`Can't duplicate pad names`)
-                    alert('You cannot create a pad with the same name as an existing one')
-                }
-                else {
-                    this.pads.push(newPad)
-                    await this.sidb.set(this.padPrefix+newPad, '')
-                    this.selected = newPad
-                    await this.savePadList()
-                    if (verbose) console.log(`Created "${newPad}"`)
-                }
+        addOpenModal() { // button action
+            this.toggleModal('addmodal')
+            this.newModal = ''
+            document.getElementById('addModalInput').focus()
+        },
+        renameOpenModal() { // button action
+            this.toggleModal('renamemodal')
+            this.newModal = ''
+            document.getElementById('renameModalInput').focus()
+        },
+        async addPad() { // confirm button action
+            const newPad = this.newModal
+            if (newPad.trim() == '') {
+                if (verbose) console.log(`Can't create a pad with an empty name or only spaces`)
+                this.alert('You cannot create a pad with no name.')
+            }
+            else if (this.pads.includes(newPad)) {
+                if (verbose) console.log(`Can't duplicate pad names`)
+                this.alert('You cannot create a pad with the same name as an existing one.')
             }
             else {
-                if (verbose) console.log(`User cancelled creation of new pad`)
-            }
-        },
-        async removePad() { // button action
-            const old = this.selected
-            if (confirm(`Are you sure you want to PERMANENTLY remove "${old}"?`)) {
-                this.pads = this.pads.filter(el => el != old)
+                this.pads.push(newPad)
+                await this.sidb.set(this.padPrefix+newPad, '')
+                this.selected = newPad
                 await this.savePadList()
-                if (verbose) console.log(`Removing "${old}"`)
-                await this.sidb.delete(this.padPrefix+old)
-                this.selected = 'home'
-            }
-            else {
-                if (verbose) console.log('User cancelled deletion of this pad')
+                if (verbose) console.log(`Created "${newPad}"`)
+
+                this.newModal = '' // clear text
+                this.toggleModal('addmodal')
             }
         },
-        async renamePad() { // button action
-            const newName = prompt('Enter the new name for this pad')
-            if (newName) {
-                if (this.pads.includes(newName)) {
-                    if (verbose) console.log(`Can't duplicate pad names`)
-                    alert('You cannot rename a pad to the same name as an existing one')
-                }
-                else {
-                    const oldName = this.selected
-                    const index = this.pads.indexOf(oldName)
-                    this.pads[index] = newName
-                    this.selected = newName
-                    if (verbose) console.log(`Renamed "${oldName}" to "${newName}"`)
-                }
+        async removePad() { // confirm button action
+            const old = this.selected
+
+            this.pads = this.pads.filter(el => el != old)
+            await this.savePadList()
+            if (verbose) console.log(`Removing "${old}"`)
+            await this.sidb.delete(this.padPrefix+old)
+            this.selected = 'home'
+
+            this.toggleModal('deletemodal')
+        },
+        async renamePad() { // confirm button action
+            const newName = this.renameModal
+            if (newName.trim() == '') {
+                if (verbose) console.log(`Can't rename a pad to an empty name or just spaces`)
+                this.alert('You cannot rename a pad to have no name or a name of only spaces.')
+            }
+            else if (this.pads.includes(newName)) {
+                if (verbose) console.log(`Can't duplicate pad names`)
+                this.alert('You cannot rename a pad to the same name as an existing one.')
             }
             else {
-                if (verbose) console.log(`User cancelled renaming`)
+                const oldName = this.selected
+                const index = this.pads.indexOf(oldName)
+                this.pads[index] = newName
+                this.selected = newName
+                if (verbose) console.log(`Renamed "${oldName}" to "${newName}"`)
+
+                this.renameModal = ''
+                this.toggleModal('renamemodal')
             }
         },
         async savePad(location) { // button action
             if (verbose) console.log(`Saving "${location}"`)
             await this.sidb.set(this.padPrefix+location, this.mde.value())
+        },
+        toggleModal(id) {
+            const $modal = document.getElementById(id)
+            $modal.classList.toggle('show-modal')
         },
         async getPad(location) {
             if (verbose) console.log(`Getting "${location}"`)
