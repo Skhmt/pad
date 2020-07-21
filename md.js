@@ -1,5 +1,11 @@
-const verbose = true
- 
+let verbose = false
+function v() {
+    verbose = !verbose
+    console.log(`Verbose logging set to ${verbose}`)
+}
+console.log('Markdownpad 1.3.0')
+console.log('Run `v()` in the dev console to enable logging.')
+
 const app = new Vue({
     el: '#app',
     data: {
@@ -65,17 +71,20 @@ const app = new Vue({
             cm.focus()
             cm.setCursor(cm.lineCount(), 0)
         },
-        addOpenModal() { // button action
+        // button action
+        addOpenModal() {
             this.toggleModal('addmodal')
             this.newModal = ''
             document.getElementById('addModalInput').focus()
         },
-        renameOpenModal() { // button action
+        // button action
+        renameOpenModal() {
             this.toggleModal('renamemodal')
             this.newModal = ''
             document.getElementById('renameModalInput').focus()
         },
-        async addPad() { // confirm button action
+        // confirm button action
+        async addPad() {
             const newPad = this.newModal
             if (newPad.trim() == '') {
                 if (verbose) console.log(`Can't create a pad with an empty name or only spaces`)
@@ -86,17 +95,15 @@ const app = new Vue({
                 this.alert('You cannot create a pad with the same name as an existing one.')
             }
             else {
-                this.pads.push(newPad)
-                await this.sidb.set(this.padPrefix+newPad, '')
-                this.selected = newPad
-                await this.savePadList()
-                if (verbose) console.log(`Created "${newPad}"`)
+                const finalName = await this.createAndSwitchPad(newPad, '')
+                if (verbose) console.log(`Created "${finalName}"`)
 
                 this.newModal = '' // clear text
                 this.toggleModal('addmodal')
             }
         },
-        async removePad() { // confirm button action
+        // confirm button action
+        async removePad() {
             const old = this.selected
 
             this.pads = this.pads.filter(el => el != old)
@@ -107,7 +114,8 @@ const app = new Vue({
 
             this.toggleModal('deletemodal')
         },
-        async renamePad() { // confirm button action
+        // confirm button action
+        async renamePad() {
             const newName = this.renameModal
             if (newName.trim() == '') {
                 if (verbose) console.log(`Can't rename a pad to an empty name or just spaces`)
@@ -128,14 +136,46 @@ const app = new Vue({
                 this.toggleModal('renamemodal')
             }
         },
-        async savePad(location) { // button action
+        // button action
+        async savePad(location) { 
             if (verbose) console.log(`Saving "${location}"`)
             await this.sidb.set(this.padPrefix+location, this.mde.value())
+        },
+        // button action
+        triggerUpload() { 
+            const $fui = document.getElementById('fileUploadInput')
+            $fui.click()
+        },
+        // handle the file upload window
+        async loadFile(ev) {
+            const file = ev.target.files[0]
+            let name = file.name
+            const reader = new FileReader()
+            reader.onload = async e => {
+                const finalName = await this.createAndSwitchPad(name, e.target.result)
+                if (verbose) console.log(`Loaded "${finalName}"`)
+            }
+            reader.readAsText(file)
+        },
+        async createAndSwitchPad(name, data) {
+            let tempName = name
+            // add name to pad list
+            if (this.pads.includes(tempName)) tempName = name + '_' + Date.now()
+            this.pads.push(tempName)
+            // create a database entry
+            await this.sidb.set(this.padPrefix+tempName, data || '')
+            // switch to the pad
+            this.selected = tempName
+            // save the pad list
+            await this.savePadList()
+
+            return tempName
         },
         toggleModal(id) {
             const $modal = document.getElementById(id)
             $modal.classList.toggle('show-modal')
         },
+        // returns the data of a pad
         async getPad(location) {
             if (verbose) console.log(`Getting "${location}"`)
             return await this.sidb.get(this.padPrefix+location)
